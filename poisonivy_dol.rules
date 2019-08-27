@@ -1,0 +1,7 @@
+# https://www.crowdstrike.com/blog/department-labor-strategic-web-compromise/
+
+alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg: "[CrowdStrike] Poison Ivy Plugin -- japan092"; flow: established, from_server; content: "|f2 b0 80 bf de 19 78 54 2b c7 85 86 97 6e 84 db b7 25 65 cc 16 02 d9 0e 9c be 3d 79|"; offset: 4; depth: 32;  sid: x; rev: 1; )
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET any (msg: "[CrowdStrike] Poison Ivy Victim Keep-Alive  -- japan092"; flow: established, to_server; dsize: 48; content: "|0f 07 06 1c 02 bc 42 51 ab ce 22 a7 a2 15 15 0c|"; offset: 0; depth: 16; sid: x; rev: 1; )
+
+alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg: "[CrowdStrike] Poison Ivy Controller Keep-Alive -- japan092"; flow: established, from_server; dsize: 48; content: "|f2 82 18 f2 08 53 2e 19  24 d5 8b 54 44 73 55 87|"; offset: 0; depth: 16; sid: x; rev: 1; )

@@ -1,0 +1,4 @@
+# https://www.crowdstrike.com/blog/whois-clever-kitten/index.html
+
+alert tcp $EXTERNAL_NET any -> $HTTP_SERVERS any (msg:"[CrowdStrike] - Acunetix scan"; flow: established, from_client; content:"GET /acunetix-wvs-test-for-some-inexistent-file"; depth: 47; sid: XXX; rev: 1; ) 
+alert tcp $HTTP_SERVERS any -> $EXTERNAL_NET any (msg: "[CrowdStrike] - RC Webshell Victim Enumeration Table Header"; content: "SYS</td>|0a|<td align="center" class="topt">|0a|KERNEL</td>|0a|<td align="center" class="topt">|0a|USER</td>|0a|<td align="center" class="topt">|0a|DISK TOTAL/FREE</td>"; flow: established, from_server; sid: xxx; rev: 1;)

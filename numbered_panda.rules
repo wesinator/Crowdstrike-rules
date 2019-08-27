@@ -1,0 +1,7 @@
+# https://www.crowdstrike.com/blog/whois-numbered-panda/index.html
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET any (msg: "[CrowdStrike] NUMBERED PANDA - Joy RAT Variant 1"; flow: from_client,established; content: "6YmV|7c 22|"; depth: 6; sid: xxx; rev: 2; )
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET any (msg: "[CrowdStrike] NUMBERED PANDA - Joy RAT Variant 2"; flow: from_client, established; content: "Fyoj`U"; depth: 6; sid: xxx; rev: 2;)
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET any  (msg: "[CrowdStrike] NUMBERED PANDA - Joy RAT Variant 3"; flow: from_client,established; content: "yb|13|j["; depth: 5; sid: xxx; rev: 2;)

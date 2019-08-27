@@ -1,0 +1,9 @@
+# https://www.crowdstrike.com/blog/rare-glimpse-real-life-command-and-control-server/
+
+alert tcp $HOME_NET any -> $EXTERNAL_NET any (msg: "[CrowdStrike] -- Viceroy Tiger -- DragonEye C2 Communication -- Beacon"; flow:from_client,established; content: "Auth"; offset: 0; depth: 4; content: "\#/"; distance: 0; within: 30; sid: 1981305001; rev: 20130514;)
+
+alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg: "[CrowdStrike] Viceroy Tiger -- DragonEye C2 Communication -- Remote Shell Start"; flow:from_server,established; dsize: 4; content: "SheA"; sid: 1981305007; rev: 20130514;)
+
+alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg: "[CrowdStrike] Viceroy Tiger -- DragonEye C2 Communication" -- Remote Shell Stop; flow:from_server,established; dsize: 4; content: "SheD"; sid: 1981305008; rev: 20130514;)
+
+alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg: "[CrowdStrike] Viceroy Tiger -- DragonEye C2 Communication -- Remote Shell Command"; flow:from_server,established; content: "SheC"; offset: 0; depth: 4; sid: 1981305009; rev: 20130514;)

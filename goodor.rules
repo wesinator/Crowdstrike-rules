@@ -1,0 +1,5 @@
+# https://www.ncsc.gov.uk/files/NCSC%20advisory%20-%20CNI%20Supply%20Chain.pdf
+alert tcp any any <> any any (flow: established; msg: "backdoor.goodor
+beacons"; content: "User-Agent|3a|Go-http-client/1.1|0d0a|AcceptEncoding|3a|gzip"; pcre:"/\.(aspx|txt)\?[a-z0-9]{3}=[a-z0-9]{32}&/"; sid:
+00000001; rev: 1; priority: 1;)
+

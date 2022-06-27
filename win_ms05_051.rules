@@ -1,0 +1,10 @@
+# https://www.hnsdkj.net/news/18633.html
+# https://www-hnsdkj-net.translate.goog/news/18633.html?_x_tr_sl=zh-CN&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=sc
+
+alert tcp $EXTERNAL_NET any -> $SQL_SERVERS 1433 (msg:"EXPLOIT MS-SQL Hello Overflow Attempt"; flow:to_server,established; content:"|12 01 00 34 00 00 00 00|"; offset:0; depth: 8; dsize:>570; reference:url,;)
+
+alert tcp $EXTERNAL_NET any -> $HOME_NET 445 (msg:"EXPLOIT UPnP Overflow Attempt"; flow:to_server,established; content:"|ff 53 4d 42 25|"; offset:4; depth:5; content:"| 5c 00 50 00 49 00 50 00 45 00 5c 00 00 00|"; offset:72; depth:14; content:"|26 00|"; offset:65; depth:2; content:"|00|"; offset:90; depth:1; content:"|36 00|"; offset:110; depth:2; content:"|90 90 90 90 90 90 90 90 90 90 90 90|"; offset:200; dsize: >1300; reference:url,;)
+
+alert tcp $EXTERNAL_NET any -> $HOME_NET 1024: (msg:"EXPLOIT MSDTC Overflow Attempt"; flow:to_server,established; content:"|05 00 00 83 10 00 00 00 2c 05|"; offset:0; depth: 10; content:"|e0 0c 6b 90 0b c7 67 10 b3 17 00 dd 01 06 62 da|"; offset:24; depth:16; content:"|cc 00 cc 00 cc 00 cc 00 cc 00 cc 00 cc 00 cc 00|"; offset:208; dsize:1024; reference:url,;)
+
+alert tcp $EXTERNAL_NET any -> $HOME_NET 42 (msg:"EXPLOIT WINS Overflow Attempt"; flow:to_server,established; byte_test:1,&,64,6; byte_test:1,&,32,6; byte_test:1, &,16,6; byte_test:1,&,8,6; pcre:!"/^.{8}(\x05\x37(\x1E[\x90-\xFF]|[\x1F-\x2F]. |\x30[\x00-\x70])|\x00\x00\x00[\x00-\x65]|\x02\x68\x05\xC0)/s"; reference:bugtraq,11763; reference:cve,2004 -1080; reference:url,;)
